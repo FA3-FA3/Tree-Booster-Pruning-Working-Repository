@@ -39,7 +39,7 @@ SpectraPackage = pd.concat([df.loc[:, idx["Photometry", :, ["Error"], :, :, :, :
 
 # Transformed Spectra
 SpectraPackage = explore_commons.transform_Spectra(df, corrected_error_2=True)
-'''
+
 # All Physically Relevant Variables
 PhysicsPackage = pd.concat([BasePackage, df.loc[:, idx["Adopted", ["E(B-V)", 'logg', '[Fe/H]'], "Value", :, :, :, :]],
                             df.loc[:, idx["Ancillary", "Tspec", "Value", :, :, :, :]], SpectraPackage], axis=1)
@@ -52,8 +52,8 @@ all_models = []
 # Split Indices
 train_indices, test_indices = explore_commons.custom_train_test_split_2(classes, test_size=0.2, min_class_instances=40)
 
-DataPackages = {'Base': BasePackage, 'Bias': BiasPackage, 'Spectra': SpectraPackage, 'Physics': PhysicsPackage,
-                'Full': FullPackage}
+#DataPackages = {'Base': BasePackage, 'Bias': BiasPackage, 'Spectra': SpectraPackage, 'Physics': PhysicsPackage, 'Full': FullPackage}
+DataPackages = {'Base': BasePackage}
 weight_params = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
 y_test = classes.iloc[test_indices]
 y_train = classes.iloc[train_indices]
@@ -67,7 +67,7 @@ for dat_pack in DataPackages.items():
     with open(f'tuning_results_5foldcv_2000_iter_ms_augmented/output_{dat_pack[0]}.txt', "r") as fp:
         server_outputs = fp.readlines()
         package_params = eval(server_outputs[1])
-
+'''
     start = timer()
 
     # Get train/test dataframes

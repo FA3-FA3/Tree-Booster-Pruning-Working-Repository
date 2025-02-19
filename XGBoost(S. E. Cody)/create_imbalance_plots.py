@@ -18,7 +18,7 @@ df, classes, header = explore_commons.read_data(cwd + '\\Data\\10percent_full.da
 
 # Preprocess df
 df, classes = explore_commons.process_data_frame_2(df, classes, header[2:])
-'''
+
 # Merge duplicate Wavelengths
 df = explore_commons.merge_duplicate_wavelength_cols(df)
 
@@ -64,9 +64,9 @@ X_test, y_test = explore_commons.add_multilabel_as_novel_samples(X_test, y_test)
 y_labs = le.transform(y_test)
 
 print('''
-'''Output:
+Output:
 Missingness Level, Star Type, F1 for Star, Macro without Star
-''''''')
+''')
 for star_class in range(0, 9):
     print(le.inverse_transform([star_class]))
     for missingness in np.arange(0, 1.05, 0.05):
@@ -99,4 +99,4 @@ for star_class in range(0, 9):
         # plot 2 info
         result_2 = f1[:star_class] + f1[star_class+1:]
         print(f"{missingness}, {le.inverse_transform([star_class])[0]}, {str(result_1)}, {str(np.mean(result_2))}")
-        '''
+        
