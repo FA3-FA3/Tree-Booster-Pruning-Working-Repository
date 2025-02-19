@@ -183,6 +183,7 @@ def transform_Spectra(data, corrected_error=False, corrected_error_2=False):
         ten_percent = raw_values.multiply(0.1, axis=1)
         tmp_df = pd.concat([ten_percent, phot_error], axis=1)
         sub_error = pd.DataFrame()
+        tmp_df.fillna(0, inplace=True)
         for i, col in enumerate(ten_percent.columns):
             tmp_indexer = list(col)
             tmp_indexer[2] = 'Error'
@@ -193,6 +194,8 @@ def transform_Spectra(data, corrected_error=False, corrected_error_2=False):
         phot_error = pd.DataFrame(sub_error)
         phot_error.columns = list(range(len(phot_error.columns)))
         phot_error.replace(['0', 0], np.nan, inplace=True)
+        dereddened.fillna(0, inplace=True)
+        model.fillna(0, inplace=True)
         #new_error = dereddened.sub(model, fill_value=0, axis=0).div(phot_error.to_numpy(), axis=0)
         transformed_spectra = np.log(dereddened.div(model, fill_value=1, axis=0)).div(np.log(phot_error.to_numpy() + 1), axis=0)
     else:
