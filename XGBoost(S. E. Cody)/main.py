@@ -36,6 +36,30 @@ BiasPackage = df.loc[:, idx["Adopted", ["RA", "Dec", "PMRA", "PMDec", "Distance"
 SpectraPackage = pd.concat([df.loc[:, idx["Photometry", :, ["Error"], :, :, :, :]],
                             df.loc[:, idx[["Model", "Dereddened"], :, "Value", :, :, :, :]]], axis=1)
 
+idx = pd.IndexSlice
+dereddened = df.loc[:, idx["Dereddened", :, "Value", :, :, :, :]]
+model = df.loc[:, idx["Model", :, "Value", :, :, :, :]]
+phot_error = df.loc[:, idx["Photometry", :, "Error", :, :, :, :]]
+
+raw_values = df.loc[:, idx["Photometry", :, "Value", :, :, :, :]]
+ten_percent = raw_values.multiply(0.1, axis=1)
+tmp_df = pd.concat([ten_percent, phot_error], axis=1)
+sub_error = pd.DataFrame()
+for i, col in enumerate(ten_percent.columns):
+    tmp_indexer = list(col)
+    tmp_indexer[2] = 'Error'
+    sub_error[i] = np.sqrt(tmp_df[[col, tmp_indexer]] ** 2).sum(axis=1).to_numpy()
+# transform_spectra
+dereddened.columns = list(range(len(dereddened.columns)))
+model.columns = list(range(len(model.columns)))
+phot_error = pd.DataFrame(sub_error)
+phot_error.columns = list(range(len(phot_error.columns)))
+phot_error.replace(['0', 0], np.nan, inplace=True)
+#new_error = dereddened.sub(model, fill_value=0, axis=0).div(phot_error.to_numpy(), axis=0)
+transformed_spectra = np.log(dereddened.div(model, fill_value=1, axis=0)).div(np.log(phot_error.to_numpy() + 1), axis=0)
+
+
+'''
 # Transformed Spectra
 SpectraPackage = explore_commons.transform_Spectra(df, corrected_error_2=True)
 
@@ -97,8 +121,8 @@ for dat_pack in DataPackages.items():
 
     end = timer()
 
-    print(f'''
+    print(f'''''''
 {str(metrics.accuracy_score(y_test, y_pred))}
 {str(metrics.f1_score(y_pred, y_test, average='macro'))}
 {str(metrics.classification_report(y_test, y_pred))}
-Time taken: {str(end - start)}''')
+Time taken: {str(end - start)}'''#)
