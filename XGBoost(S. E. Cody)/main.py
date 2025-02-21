@@ -53,7 +53,7 @@ all_models = []
 train_indices, test_indices = explore_commons.custom_train_test_split_2(classes, test_size=0.2, min_class_instances=40)
 
 #DataPackages = {'Base': BasePackage, 'Bias': BiasPackage, 'Spectra': SpectraPackage, 'Physics': PhysicsPackage, 'Full': FullPackage}
-DataPackages = {'Base': BasePackage}
+DataPackages = {'Full': FullPackage}
 weight_params = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
 y_test = classes.iloc[test_indices]
 y_train = classes.iloc[train_indices]
@@ -67,7 +67,7 @@ for dat_pack in DataPackages.items():
     with open(f'tuning_results_5foldcv_2000_iter_ms_augmented/output_{dat_pack[0]}.txt', "r") as fp:
         server_outputs = fp.readlines()
         package_params = eval(server_outputs[1])
-'''
+
     start = timer()
 
     # Get train/test dataframes
@@ -98,8 +98,9 @@ for dat_pack in DataPackages.items():
 
     end = timer()
 
-    print(f'''''''
-{str(metrics.accuracy_score(y_test, y_pred))}
-{str(metrics.f1_score(y_pred, y_test, average='macro'))}
-{str(metrics.classification_report(y_test, y_pred))}
-Time taken: {str(end - start)}'''#)
+    print(f"{str(metrics.accuracy_score(y_test, y_pred))}{str(metrics.f1_score(y_pred, y_test, average='macro'))}{str(metrics.classification_report(y_test, y_pred))}Time taken: {str(end - start)}")
+    
+    with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
+        pickle.dump(model, model_file)
+        
+    model.save_model(f'models/xgb_{dat_pack[0]}.json')    
