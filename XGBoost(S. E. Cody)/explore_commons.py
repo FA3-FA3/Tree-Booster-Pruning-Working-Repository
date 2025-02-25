@@ -205,7 +205,7 @@ def transform_Spectra(data, corrected_error=False, corrected_error_2=False):
         phot_error.columns = list(range(len(phot_error.columns)))
         transformed_spectra = dereddened.sub(model, fill_value=0, axis=0).div(phot_error.apply(lambda row: row.replace(['0', 0], np.nan), axis=1), fill_value=np.finfo(np.float64).eps, axis=0)
     SpectraPackage = pd.DataFrame(transformed_spectra) #, columns=data.loc[:, idx["Dereddened", :, "Value", :, :, :, :]].columns
-    SpectraPackage.replace(['0', 0], np.nan, inplace=True)
+    #SpectraPackage.replace(['0', 0], np.nan, inplace=True)
     SpectraPackage.columns = data.loc[:, idx["Dereddened", :, "Value", :, :, :, :]].columns
     return SpectraPackage
 

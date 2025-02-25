@@ -78,6 +78,10 @@ for dat_pack in DataPackages.items():
     X_train.columns = range(X_train.shape[1])
     X_test.columns = range(X_test.shape[1])
     
+    X_train[10] = X_train[10].astype(float)
+    X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
+    X_test[10] = X_test[10].astype(float)
+    
 
     w = np.array([package_params.pop(w_i) for w_i in weight_params])
     print(w)
