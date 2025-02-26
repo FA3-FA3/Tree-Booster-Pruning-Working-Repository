@@ -102,8 +102,19 @@ for dat_pack in DataPackages.items():
 
     end = timer()
 
-    print(f"{str(metrics.accuracy_score(y_test, y_pred))}{str(metrics.f1_score(y_pred, y_test, average='macro'))}{str(metrics.classification_report(y_test, y_pred))}Time taken: {str(end - start)}")
+    #Output and save results
+    output_text = (
+    f"Accuracy: {metrics.accuracy_score(y_test, y_pred)}\n"
+    f"Macro F1 Score: {metrics.f1_score(y_pred, y_test, average='macro')}\n"
+    f"Classification Report:\n{metrics.classification_report(y_test, y_pred)}\n"
+    f"Time taken: {end - start}\n"
+)
     
+    print(output_text)
+    with open(f'results/xgb_{dat_pack[0]}_results.txt', 'a') as output_file:
+        output_file.write(output_text + '\n')
+    
+    #Save trained models
     with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
         pickle.dump(model, model_file)
         
