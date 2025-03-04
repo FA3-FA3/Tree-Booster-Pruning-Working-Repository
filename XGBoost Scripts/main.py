@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import xgboost as xgb
 import pickle
 #from XGBoost_Weighted import XGBClassifier_w
+import misc
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -101,6 +102,9 @@ for dat_pack in DataPackages.items():
             j[np.argmax(y_pred_prob[i])] = 1
 
     end = timer()
+    
+    flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500)
+    flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500)
 
     #Output and save results
     output_text = (
@@ -108,6 +112,8 @@ for dat_pack in DataPackages.items():
     f"Macro F1 Score: {metrics.f1_score(y_pred, y_test, average='macro')}\n"
     f"Classification Report:\n{metrics.classification_report(y_test, y_pred)}\n"
     f"Time taken: {end - start}\n"
+    f"FLOPs(train): {flops_train:.2f}\n"
+    f"FLOPs(infer): {flops_infer:.2f}"
 )
     
     print(output_text)
