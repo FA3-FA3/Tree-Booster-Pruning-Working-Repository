@@ -8,6 +8,7 @@ import xgboost as xgb
 import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
+import tracemalloc
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -69,42 +70,58 @@ for dat_pack in DataPackages.items():
         server_outputs = fp.readlines()
         package_params = eval(server_outputs[1])
 
+    memory_snapshots = []
+
     start = timer()
+    tracemalloc.start()
+    
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     # Get train/test dataframes
     X_train = dat_pack[1].iloc[train_indices]
     X_test = dat_pack[1].iloc[test_indices]
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     # Remove multiheader information
     X_train.columns = range(X_train.shape[1])
     X_test.columns = range(X_test.shape[1])
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
     
     X_train[10] = X_train[10].astype(float)
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
     X_test[10] = X_test[10].astype(float)
-    
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     w = np.array([package_params.pop(w_i) for w_i in weight_params])
     print(w)
     model = xgb.XGBClassifier(**package_params, n_estimators = 500, eta=0.1, tree_method='hist', random_state=1606421)
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    
     print("Fitting now")
 
     # Set class weights and fit model
     model.fit(X_train, y_train, sample_weight=[np.sum(w * i) for i in y_train])
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     # Make predictions
     y_pred = model.predict(X_test)
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     # No prediction is invalid so choose highest probability in that case
     y_pred_prob = model.predict_proba(X_train)
     for i, j in enumerate(y_pred):
         if sum(j) < 1:
             j[np.argmax(y_pred_prob[i])] = 1
+    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
 
     end = timer()
     
     flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500)
     flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500)
+    
+    memory_differences = [memory_snapshots[i] - memory_snapshots[i - 1] for i in range(len(memory_snapshots) - 1, 0, -1)]
+    av_memory = sum(memory_snapshots) / len(memory_snapshots)
+    max_memory = max(memory_snapshots)
 
     #Output and save results
     output_text = (
@@ -113,7 +130,9 @@ for dat_pack in DataPackages.items():
     f"Classification Report:\n{metrics.classification_report(y_test, y_pred)}\n"
     f"Time taken: {end - start}\n"
     f"FLOPs(train): {flops_train:.2f}\n"
-    f"FLOPs(infer): {flops_infer:.2f}"
+    f"FLOPs(infer): {flops_infer:.2f}\n"
+    f"Av Memory Usage: {av_memory / (1024 ** 2):.2f} MB\n"
+    f"Max Memory Usage: {max_memory / (1024 ** 2):.2f} MB"
 )
     
     print(output_text)
