@@ -5,15 +5,7 @@ import pickle
 import networkx as nx
 import re
 
-with open(f'models/xgb_Full.pkl', 'rb') as model_file:
-    model = pickle.load(model_file)
-    
-model_s = model.get_booster()
-n_trees = model_s.num_boosted_rounds()
-dump = model_s.get_dump()
-dump_l = dump[0].split("\n")
-
-#functions for getting a tree of index, then get internal nodes, get leaves
+#function for extracting node details to array
 def node_str_to_arr(string):
     string = string.replace("\t", "")
     pattern = r"(\d+):\[(.*?)] yes=(\d+),no=(\d+),missing=(\d+)"
@@ -30,9 +22,41 @@ def node_str_to_arr(string):
         ]
     else:
         return []
+
+
+with open(f'models/xgb_Full.pkl', 'rb') as model_file:
+    model = pickle.load(model_file)
     
+model_s = model.get_booster()
+n_trees = model_s.num_boosted_rounds()
+dump = model_s.get_dump()
+class_trees = [None] * 9
+for i in range(9):
+    class_trees[i] = [dump[j] for j in range(i, len(dump), 9)]
+
+
+#dump_l = dump[0].split("\n")
+
+
 
 '''
+split_dump = [None] * len(dump)
+for i in range(len(dump)):
+    split_dump[i] = dump[i].split("\n")
+
+ordered_dump = [None] * len(dump)
+for i in range(len(split_dump)):
+    for j in range(len(split_dump[i])):
+        tmp = [None] * len(split_dump[i])
+        tmp[j] = node_str_to_arr(split_dump[i][j])
+    ordered_dump[i] = tmp
+
+
+
+
+    
+
+
 def plot_tree():
     G = nx.DiGraph()
 '''
