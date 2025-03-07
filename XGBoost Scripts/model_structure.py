@@ -33,7 +33,10 @@ dump = model_s.get_dump()
 class_trees = [None] * 9
 for i in range(9):
     class_trees[i] = [dump[j] for j in range(i, len(dump), 9)]
-
+    for j in range(len(class_trees[i])):
+        class_trees[i][j] = class_trees[i][j].split("\n")
+        #for k in range(len(class_trees[i][j])):
+            #class_trees[i][j][k] = node_str_to_arr(class_trees[i][j][k])
 
 #dump_l = dump[0].split("\n")
 
