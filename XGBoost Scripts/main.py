@@ -9,6 +9,7 @@ import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
 import tracemalloc
+import model_structure
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -143,4 +144,6 @@ for dat_pack in DataPackages.items():
     with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
         pickle.dump(model, model_file)
         
-    model.save_model(f'models/xgb_{dat_pack[0]}.json')    
+    model.save_model(f'models/xgb_{dat_pack[0]}.json')
+    
+    model_shap = model_structure.shap_features(model, X_train)

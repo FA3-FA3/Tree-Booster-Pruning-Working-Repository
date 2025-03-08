@@ -5,6 +5,7 @@ import pickle
 import networkx as nx
 import re
 import matplotlib.pyplot as plt
+import shap
 
 #function for extracting node details to array
 def node_str_to_arr(string):
@@ -84,6 +85,12 @@ def plot_binary_tree(tree):
     plt.title("Binary Tree")
     plt.savefig("binary_tree.png", format="png", dpi=300)
     plt.show()
+
+def shap_features(model, X_train):
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X_train)
+    shap.summary_plot(shap_values, X_train)
+    shap.summary_plot(shap_values, X_train, plot_type="bar")
 
 
 with open(f'models/xgb_Full.pkl', 'rb') as model_file:

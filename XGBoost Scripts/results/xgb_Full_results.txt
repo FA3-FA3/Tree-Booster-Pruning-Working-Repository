@@ -45,3 +45,28 @@ Time taken: 83.26941119999992
 FLOPs(train): 46503936000.00
 FLOPs(infer): 121101000.00
 Av Memory Usage: 133.00 MBMax Memory Usage: 158.40 MB
+Accuracy: 0.7008942948447989
+Macro F1 Score: 0.5891237781974878
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.65      0.63      0.64      5103
+           1       0.37      0.36      0.36       428
+           2       0.56      0.67      0.61      6435
+           3       0.69      0.88      0.77      1187
+           4       0.40      0.22      0.28        87
+           5       0.88      0.98      0.93     17145
+           6       0.56      0.43      0.49       486
+           7       0.63      0.59      0.61      9471
+           8       0.60      0.62      0.61       624
+
+   micro avg       0.73      0.77      0.75     40966
+   macro avg       0.59      0.60      0.59     40966
+weighted avg       0.72      0.77      0.75     40966
+ samples avg       0.75      0.78      0.76     40966
+
+Time taken: 64.64024590000008
+FLOPs(train): 46503936000.00
+FLOPs(infer): 121101000.00
+Av Memory Usage: 134.25 MB
+Max Memory Usage: 163.43 MB
