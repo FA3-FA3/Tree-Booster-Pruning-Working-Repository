@@ -55,7 +55,7 @@ def plot_binary_tree(tree):
             no_val = tree[i][4]
             missing_val = tree[i][5]
             
-            G.add_node(str(index), label=f"Index {index}\nFeature I {feature_index}\nCon <{condition}\nYes {yes_val}\nNo {no_val}\nMissing {missing_val}")
+            G.add_node(str(index), label=f"Index {index}\nFeature I {feature_index}\n<{condition}\nYes {yes_val}\nNo {no_val}\nMissing {missing_val}")
             
 
         elif len(tree[i]) == 2:
@@ -79,7 +79,7 @@ def plot_binary_tree(tree):
     plt.figure(figsize=(30, 15))
     labels = nx.get_node_attributes(G, 'label')
     nx.draw(G, pos=positions, with_labels=True, labels=labels, 
-            node_size=3000, node_color="skyblue", font_size=5, 
+            node_size=3000, node_color="skyblue", font_size=3.5, 
             font_weight="bold", edge_color="gray")
     plt.title("Binary Tree")
     plt.savefig("binary_tree.png", format="png", dpi=300)
@@ -90,4 +90,3 @@ with open(f'models/xgb_Full.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
     
 class_trees = model_dump_to_array(model)
-
