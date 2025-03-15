@@ -89,11 +89,24 @@ def plot_binary_tree(tree):
 def shap_features(model, X_train):
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X_train)
-    shap.summary_plot(shap_values, X_train)
+    #shap.summary_plot(shap_values, X_train)
     shap.summary_plot(shap_values, X_train, plot_type="bar")
+    return shap_values
 
-
+'''
+import tracemalloc
+tracemalloc.start()
+snapshot1 = tracemalloc.take_snapshot()
 with open(f'models/xgb_Full.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
     
 class_trees = model_dump_to_array(model)
+
+plot_binary_tree(class_trees[0][0])
+
+snapshot2 = tracemalloc.take_snapshot()
+
+stats = snapshot2.compare_to(snapshot1, 'lineno')
+for stat in stats[:10]:
+    print(stat)
+    '''

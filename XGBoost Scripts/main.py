@@ -9,7 +9,6 @@ import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
 import tracemalloc
-import model_structure
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -71,69 +70,86 @@ for dat_pack in DataPackages.items():
         server_outputs = fp.readlines()
         package_params = eval(server_outputs[1])
 
-    memory_snapshots = []
+    memory_snapshots_train = []
+    memory_snapshots_infer = []
 
-    start = timer()
+    start1 = timer()
     tracemalloc.start()
     
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
 
     # Get train/test dataframes
     X_train = dat_pack[1].iloc[train_indices]
     X_test = dat_pack[1].iloc[test_indices]
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
 
     # Remove multiheader information
     X_train.columns = range(X_train.shape[1])
     X_test.columns = range(X_test.shape[1])
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
     
     X_train[10] = X_train[10].astype(float)
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
     X_test[10] = X_test[10].astype(float)
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
 
     w = np.array([package_params.pop(w_i) for w_i in weight_params])
     print(w)
     model = xgb.XGBClassifier(**package_params, n_estimators = 500, eta=0.1, tree_method='hist', random_state=1606421)
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
     
     print("Fitting now")
-
+    
+    train_snap1 = tracemalloc.take_snapshot()
+    
     # Set class weights and fit model
     model.fit(X_train, y_train, sample_weight=[np.sum(w * i) for i in y_train])
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
-
+    train_snap2 = tracemalloc.take_snapshot()
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    
+    end1 = timer()
+    start2 = timer()
+    
+    infer_snap1 = tracemalloc.take_snapshot()
+    
     # Make predictions
     y_pred = model.predict(X_test)
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
 
     # No prediction is invalid so choose highest probability in that case
     y_pred_prob = model.predict_proba(X_train)
     for i, j in enumerate(y_pred):
         if sum(j) < 1:
             j[np.argmax(y_pred_prob[i])] = 1
-    memory_snapshots.append(tracemalloc.get_traced_memory()[0])
+    infer_snap2 = tracemalloc.take_snapshot()
+    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
 
-    end = timer()
+    end2 = timer()
     
     flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500)
     flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500)
     
-    memory_differences = [memory_snapshots[i] - memory_snapshots[i - 1] for i in range(len(memory_snapshots) - 1, 0, -1)]
-    av_memory = sum(memory_snapshots) / len(memory_snapshots)
-    max_memory = max(memory_snapshots)
+    av_mem_train, max_mem_train = misc.memory_stats(memory_snapshots_train)
+    av_mem_infer, max_mem_infer = misc.memory_stats(memory_snapshots_infer)
+    
+    train_stats = train_snap2.compare_to(train_snap1, 'lineno')
+    infer_stats = infer_snap2.compare_to(infer_snap1, 'lineno')
 
     #Output and save results
     output_text = (
     f"Accuracy: {metrics.accuracy_score(y_test, y_pred)}\n"
     f"Macro F1 Score: {metrics.f1_score(y_pred, y_test, average='macro')}\n"
     f"Classification Report:\n{metrics.classification_report(y_test, y_pred)}\n"
-    f"Time taken: {end - start}\n"
+    f"Time taken(train): {end1 - start1}\n"
+    f"Time taken(infer): {end2 - start2}\n"
     f"FLOPs(train): {flops_train:.2f}\n"
     f"FLOPs(infer): {flops_infer:.2f}\n"
-    f"Av Memory Usage: {av_memory / (1024 ** 2):.2f} MB\n"
-    f"Max Memory Usage: {max_memory / (1024 ** 2):.2f} MB"
+    f"Av Memory Usage(train): {av_mem_train / (1024 ** 2):.2f} MB\n"
+    f"Max Memory Usage(train): {max_mem_train / (1024 ** 2):.2f} MB\n"
+    f"Av Memory Usage(infer): {av_mem_infer / (1024 ** 2):.2f} MB\n"
+    f"Max Memory Usage(infer): {max_mem_infer / (1024 ** 2):.2f} MB\n"
+    f"Snapshot Stats(train): {train_stats[:10]}\n"
+    f"Snapshot Stats(infer): {infer_stats[:10]}"
 )
     
     print(output_text)
@@ -145,5 +161,3 @@ for dat_pack in DataPackages.items():
         pickle.dump(model, model_file)
         
     model.save_model(f'models/xgb_{dat_pack[0]}.json')
-    
-    model_shap = model_structure.shap_features(model, X_train)

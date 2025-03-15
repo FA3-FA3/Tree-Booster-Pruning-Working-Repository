@@ -1,0 +1,5 @@
+gamma - min loss reduction for split
+max_depth
+min_child_weight - If sum of instance weights in a node is less than this threshold, split is pruned
+subsample - sample per tree
+	for more control - colsample_bytree, colsample_bylevel, colsample_bynode

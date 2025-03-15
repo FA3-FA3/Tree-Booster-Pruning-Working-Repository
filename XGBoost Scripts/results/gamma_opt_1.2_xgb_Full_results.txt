@@ -1,0 +1,31 @@
+gamma: 1.2
+Accuracy: 0.6976986152054896
+Macro F1 Score: 0.5760972398253617
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.65      0.62      0.63      5225
+           1       0.43      0.33      0.38       457
+           2       0.56      0.67      0.61      6383
+           3       0.66      0.90      0.76      1145
+           4       0.39      0.15      0.21        96
+           5       0.88      0.98      0.93     17226
+           6       0.54      0.45      0.49       478
+           7       0.63      0.60      0.61      9355
+           8       0.55      0.58      0.56       609
+
+   micro avg       0.73      0.78      0.75     40974
+   macro avg       0.59      0.59      0.58     40974
+weighted avg       0.72      0.78      0.75     40974
+ samples avg       0.74      0.78      0.75     40974
+
+Time taken(train): 64.40520579999429
+Time taken(infer): 7.418041299999459
+FLOPs(train): 46503936000.00
+FLOPs(infer): 121101000.00
+Av Memory Usage(train): 284.14 MB
+Max Memory Usage(train): 288.44 MB
+Av Memory Usage(infer): 289.99 MB
+Max Memory Usage(infer): 291.37 MB
+Snapshot Stats(train): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\numpy\\core\\fromnumeric.py' lineno=88>,)> size=7750656 (+3875328) count=322944 (+161472)>, <StatisticDiff traceback=<Traceback (<Frame filename='c:\\users\\frank\\comp3000\\xgboost scripts\\optimize1_main.py' lineno=116>,)> size=2887152 (+1443576) count=4 (+2)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=103248 (+51624) count=886 (+443)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=47904 (+23952) count=502 (+251)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=28224 (+12888) count=552 (+259)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\tracemalloc.py' lineno=193>,)> size=69744 (-12000) count=1453 (-250)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=23352 (+11520) count=390 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=21312 (+10656) count=372 (+186)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\core.py' lineno=407>,)> size=9012 (+8652) count=55 (+52)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=283>,)> size=15600 (+7680) count=390 (+192)>]
+Snapshot Stats(infer): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=157392 (+54144) count=1350 (+464)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=74496 (+26592) count=777 (+275)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=43200 (+14976) count=840 (+288)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=34872 (+11520) count=582 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=31968 (+10656) count=558 (+186)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\numpy\\core\\fromnumeric.py' lineno=59>,)> size=22264 (+7744) count=186 (+65)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=283>,)> size=23280 (+7680) count=582 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\flags.py' lineno=53>,)> size=23280 (+7680) count=291 (+96)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1024>,)> size=23040 (+7680) count=576 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\tracemalloc.py' lineno=558>,)> size=87616 (-7432) count=1698 (-148)>]
