@@ -3,13 +3,14 @@ import explore_commons
 import numpy as np
 import pandas as pd
 from sklearn import metrics, utils, model_selection
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import xgboost as xgb
-import pickle
+#import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
 import tracemalloc
 import ast
+import json
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -69,7 +70,7 @@ hyperparameters = ['gamma', 'max_depth', 'min_child_weight', 'subsample']
 gamma_vals = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 max_depth_vals = [3, 4, 5, 6, 7, 8, 9]
 min_child_weight_vals = [1, 2, 3, 4, 5, 6, 7, 8]
-subsample_vals = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2]
+subsample_vals = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 for hyperparameter in hyperparameters:
     if hyperparameter == 'gamma':
@@ -149,8 +150,8 @@ for hyperparameter in hyperparameters:
         
             end2 = timer()
             
-            flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500)
-            flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500)
+            flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500, package_params['gamma'], package_params['min_child_weight'], package_params['subsample'])
+            flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500, package_params['gamma'])
             
             av_mem_train, max_mem_train = misc.memory_stats(memory_snapshots_train)
             av_mem_infer, max_mem_infer = misc.memory_stats(memory_snapshots_infer)
@@ -177,14 +178,15 @@ for hyperparameter in hyperparameters:
             f"Snapshot Stats(infer): {infer_stats[:10]}\n"
         )
             
-            output_array = f"[{hyperparameter}, {val}, {metrics.accuracy_score(y_test, y_pred)}, {metrics.f1_score(y_pred, y_test, average='macro')}, {metrics.classification_report(y_test, y_pred)}, {end1 - start1}, {end2 - start2}, {flops_train:.2f}, {flops_infer:.2f}, {av_mem_train / (1024 ** 2):.2f}, {max_mem_train / (1024 ** 2):.2f}, {av_mem_infer / (1024 ** 2):.2f}, {max_mem_infer / (1024 ** 2):.2f}]"
+            output_array = [hyperparameter, val, metrics.accuracy_score(y_test, y_pred), metrics.f1_score(y_pred, y_test, average='macro'), end1 - start1, end2 - start2, flops_train, flops_infer, av_mem_train / (1024 ** 2), max_mem_train / (1024 ** 2), av_mem_infer / (1024 ** 2), max_mem_infer / (1024 ** 2)]
             
             print(output_array)
             with open(f'results/{hyperparameter}_opt_xgb_{dat_pack[0]}_results.txt', 'a') as output_file:
                 output_file.write(output_text + '\n')
             
             with open(f'results/{hyperparameter}_opt_xgb_{dat_pack[0]}_results_arrays.txt', 'a') as output_file:
-                output_file.write(output_text + '\n')
+                json.dump(output_array, output_file)
+                output_file.write('\n')
             
             #Save trained models
             '''with open(f'models/subsample_opt_xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
