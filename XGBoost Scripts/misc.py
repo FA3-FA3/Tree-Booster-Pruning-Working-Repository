@@ -17,3 +17,8 @@ def memory_stats(memory_snapshots):
     av_memory = sum(memory_differences) / len(memory_differences)
     max_memory = max(memory_differences)
     return av_memory, max_memory
+
+def export_to_txt(df):
+    with open("df_columns.txt", "w") as f:
+        for col in df.columns:
+            f.write(str(col) + "\n")  # Convert tuple to string and write each on a new line

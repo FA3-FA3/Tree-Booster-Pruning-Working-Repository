@@ -9,6 +9,7 @@ import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
 import tracemalloc
+import photometric_graph
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -27,7 +28,7 @@ df = explore_commons.merge_duplicate_wavelength_cols(df)
 
 # Galactic Coordinate Conversion
 df = explore_commons.convert_to_galactic_coords(df)
-
+'''
 # Traditionally Most Relevant Variables Only
 BasePackage = df.loc[:, idx["Fitted", ["Teff", "Lum"], "Value", :, :, :, :]]
 
@@ -160,4 +161,4 @@ for dat_pack in DataPackages.items():
     with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
         pickle.dump(model, model_file)
         
-    model.save_model(f'models/xgb_{dat_pack[0]}.json')
+    model.save_model(f'models/xgb_{dat_pack[0]}.json')'''
