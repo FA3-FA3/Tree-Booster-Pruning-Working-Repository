@@ -98,24 +98,25 @@ for hyperparameter in hyperparameters:
             memory_snapshots_infer = []
         
             start1 = timer()
+            tracemalloc.clear_traces()
             tracemalloc.start()
             
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
         
             # Get train/test dataframes
             X_train = dat_pack[1].iloc[train_indices]
             X_test = dat_pack[1].iloc[test_indices]
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
         
             # Remove multiheader information
             X_train.columns = range(X_train.shape[1])
             X_test.columns = range(X_test.shape[1])
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
             
             X_train[10] = X_train[10].astype(float)
             X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
             X_test[10] = X_test[10].astype(float)
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
         
             w = np.array([package_params.pop(w_i) for w_i in weight_params])
             print(w)
@@ -129,7 +130,7 @@ for hyperparameter in hyperparameters:
             # Set class weights and fit model
             model.fit(X_train, y_train, sample_weight=[np.sum(w * i) for i in y_train])
             train_snap2 = tracemalloc.take_snapshot()
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
             
             end1 = timer()
             start2 = timer()
@@ -138,7 +139,7 @@ for hyperparameter in hyperparameters:
             
             # Make predictions
             y_pred = model.predict(X_test)
-            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
         
             # No prediction is invalid so choose highest probability in that case
             y_pred_prob = model.predict_proba(X_train)
@@ -146,9 +147,10 @@ for hyperparameter in hyperparameters:
                 if sum(j) < 1:
                     j[np.argmax(y_pred_prob[i])] = 1
             infer_snap2 = tracemalloc.take_snapshot()
-            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
         
             end2 = timer()
+            tracemalloc.stop()
             
             flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500, package_params['gamma'], package_params['min_child_weight'], package_params['subsample'])
             flops_infer = misc.infer_estimate_flops(len(X_test), package_params['max_depth'], 500, package_params['gamma'])
