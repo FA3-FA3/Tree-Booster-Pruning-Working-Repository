@@ -28,7 +28,7 @@ df = explore_commons.merge_duplicate_wavelength_cols(df)
 
 # Galactic Coordinate Conversion
 df = explore_commons.convert_to_galactic_coords(df)
-'''
+
 # Traditionally Most Relevant Variables Only
 BasePackage = df.loc[:, idx["Fitted", ["Teff", "Lum"], "Value", :, :, :, :]]
 
@@ -77,27 +77,27 @@ for dat_pack in DataPackages.items():
     start1 = timer()
     tracemalloc.start()
     
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
 
     # Get train/test dataframes
     X_train = dat_pack[1].iloc[train_indices]
     X_test = dat_pack[1].iloc[test_indices]
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
 
     # Remove multiheader information
     X_train.columns = range(X_train.shape[1])
     X_test.columns = range(X_test.shape[1])
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
     
     X_train[10] = X_train[10].astype(float)
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
     X_test[10] = X_test[10].astype(float)
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
 
     w = np.array([package_params.pop(w_i) for w_i in weight_params])
     print(w)
     model = xgb.XGBClassifier(**package_params, n_estimators = 500, eta=0.1, tree_method='hist', random_state=1606421)
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
     
     print("Fitting now")
     
@@ -106,7 +106,7 @@ for dat_pack in DataPackages.items():
     # Set class weights and fit model
     model.fit(X_train, y_train, sample_weight=[np.sum(w * i) for i in y_train])
     train_snap2 = tracemalloc.take_snapshot()
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
     
     end1 = timer()
     start2 = timer()
@@ -115,7 +115,7 @@ for dat_pack in DataPackages.items():
     
     # Make predictions
     y_pred = model.predict(X_test)
-    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
 
     # No prediction is invalid so choose highest probability in that case
     y_pred_prob = model.predict_proba(X_train)
@@ -123,7 +123,7 @@ for dat_pack in DataPackages.items():
         if sum(j) < 1:
             j[np.argmax(y_pred_prob[i])] = 1
     infer_snap2 = tracemalloc.take_snapshot()
-    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
+    memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
 
     end2 = timer()
     
@@ -161,4 +161,4 @@ for dat_pack in DataPackages.items():
     with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
         pickle.dump(model, model_file)
         
-    model.save_model(f'models/xgb_{dat_pack[0]}.json')'''
+    #model.save_model(f'models/xgb_{dat_pack[0]}.json')
