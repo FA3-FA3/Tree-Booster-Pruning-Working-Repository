@@ -35,16 +35,29 @@ def arrays_to_graphs(arrays, hyperparameter_str):
 
     #accuracy and macro F1
     plt.plot(opt_vals, accuracy_vals, label="Accuracy", marker="o")
-    plt.plot(opt_vals, macrof1_vals, label="Macro F1 Score", marker="s")
+    
 
     # Labels and title
     plt.xlabel(f"{hyperparameter_str} Values")
     plt.ylabel("Score")
-    plt.title(f"Accuracy & Macro F1 Score vs {hyperparameter_str} Values")
+    plt.title(f"Accuracy vs {hyperparameter_str} Values")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"graphs/{hyperparameter_str}/accuracy&macrof1.png", format="png", dpi=300)
+    plt.savefig(f"graphs/{hyperparameter_str}/accuracy.png", format="png", dpi=300)
+    
+    plt.figure(figsize=(8, 5))
+    
+    plt.plot(opt_vals, macrof1_vals, label="Macro F1 Score", marker="o")
 
+    # Labels and title
+    plt.xlabel(f"{hyperparameter_str} Values")
+    plt.ylabel("Score")
+    plt.title(f"Macro F1 Score vs {hyperparameter_str} Values")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f"graphs/{hyperparameter_str}/macrof1.png", format="png", dpi=300)
+    
+'''
     plt.figure(figsize=(8, 5))
 
     #train times
@@ -124,7 +137,7 @@ def arrays_to_graphs(arrays, hyperparameter_str):
     plt.legend()
     plt.grid(True)
     plt.savefig(f"graphs/{hyperparameter_str}/infermemory.png", format="png", dpi=300)
-
+'''
 
 with open('results/gamma_opt_xgb_Full_results_arrays.txt', 'r') as input_file:
     lines = input_file.readlines()
@@ -146,7 +159,7 @@ with open('results/subsample_opt_xgb_Full_results_arrays.txt', 'r') as input_fil
 
 subsample_arrays = [json.loads(line) for line in lines]
 
-arrays_to_graphs(gamma_arrays, 'gamma')
+#arrays_to_graphs(gamma_arrays, 'gamma')
 arrays_to_graphs(max_depth_arrays, 'max_depth')
-arrays_to_graphs(min_child_weight_arrays, 'min_child_weight')
-arrays_to_graphs(subsample_arrays, 'subsample')
+#arrays_to_graphs(min_child_weight_arrays, 'min_child_weight')
+#arrays_to_graphs(subsample_arrays, 'subsample')
