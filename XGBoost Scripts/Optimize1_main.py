@@ -146,7 +146,7 @@ for hyperparameter in hyperparameters:
             for i, j in enumerate(y_pred):
                 if sum(j) < 1:
                     j[np.argmax(y_pred_prob[i])] = 1
-                memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
+            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
             infer_snap2 = tracemalloc.take_snapshot()
             
         
