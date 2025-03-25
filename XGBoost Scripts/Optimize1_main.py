@@ -121,7 +121,7 @@ for hyperparameter in hyperparameters:
             w = np.array([package_params.pop(w_i) for w_i in weight_params])
             print(w)
             model = xgb.XGBClassifier(**package_params, n_estimators = 500, eta=0.1, tree_method='hist', random_state=1606421)
-            memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
+            memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
             
             print("Fitting now")
             
@@ -146,8 +146,9 @@ for hyperparameter in hyperparameters:
             for i, j in enumerate(y_pred):
                 if sum(j) < 1:
                     j[np.argmax(y_pred_prob[i])] = 1
+                memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
             infer_snap2 = tracemalloc.take_snapshot()
-            memory_snapshots_infer.append(tracemalloc.get_traced_memory()[1])
+            
         
             end2 = timer()
             tracemalloc.stop()
