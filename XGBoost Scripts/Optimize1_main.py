@@ -66,11 +66,10 @@ y_train, mlb = explore_commons.classes_to_multilabel([i for i in y_train["class"
 y_test = mlb.transform([i for i in y_test["class"].str.split(", ")])
 #pickle.dump(mlb, open(f'v3/models_3/LabelEncoder.pkl', "wb"))
 
-hyperparameters = ['gamma', 'max_depth', 'min_child_weight', 'subsample']
+hyperparameters = ['gamma', 'max_depth', 'min_child_weight']
 gamma_vals = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 max_depth_vals = [3, 4, 5, 6, 7, 8, 9]
 min_child_weight_vals = [1, 2, 3, 4, 5, 6, 7, 8]
-subsample_vals = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 
 for hyperparameter in hyperparameters:
     if hyperparameter == 'gamma':
@@ -79,8 +78,6 @@ for hyperparameter in hyperparameters:
         test_vals = max_depth_vals
     elif hyperparameter == 'min_child_weight':
         test_vals = min_child_weight_vals
-    elif hyperparameter == 'subsample':
-        test_vals = subsample_vals
     
     for dat_pack in DataPackages.items():
         for val in test_vals:
@@ -136,6 +133,7 @@ for hyperparameter in hyperparameters:
             start2 = timer()
             
             infer_snap1 = tracemalloc.take_snapshot()
+            tracemalloc.clear_traces()
             
             # Make predictions
             y_pred = model.predict(X_test)

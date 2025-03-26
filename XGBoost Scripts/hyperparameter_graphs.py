@@ -125,7 +125,7 @@ def arrays_to_graphs(arrays, hyperparameter_str):
     plt.savefig(f"graphs/{hyperparameter_str}/trainmemory.png", format="png", dpi=300)
     
     plt.figure(figsize=(8, 5))
-
+    
     #accuracy and macro F1
     plt.plot(opt_vals, infer_avmem, label="Average Memory Usage", marker="o")
     plt.plot(opt_vals, infer_maxmem, label="Maximum Memory Usage", marker="s")
@@ -154,12 +154,6 @@ with open('results/min_child_weight_opt_xgb_Full_results_arrays.txt', 'r') as in
 
 min_child_weight_arrays = [json.loads(line) for line in lines]
 
-with open('results/subsample_opt_xgb_Full_results_arrays.txt', 'r') as input_file:
-    lines = input_file.readlines()
-
-subsample_arrays = [json.loads(line) for line in lines]
-
 arrays_to_graphs(gamma_arrays, 'gamma')
 arrays_to_graphs(max_depth_arrays, 'max_depth')
 arrays_to_graphs(min_child_weight_arrays, 'min_child_weight')
-arrays_to_graphs(subsample_arrays, 'subsample')
