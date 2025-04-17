@@ -88,13 +88,16 @@ for dat_pack in DataPackages.items():
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
     X_test[10] = X_test[10].astype(float)
     
+    
+    #INDICIES OF TREES TO PRUNE
+    remove_trees = {20, 21}
         
     trees = model.get_booster().get_dump(dump_format='json')
     n_classes = 9
     trees_per_class = len(trees) // n_classes
     
     class_trees = [
-        [json.loads(trees[i]) for i in range(cls_idx, len(trees), n_classes)]
+        [json.loads(trees[i]) for i in range(cls_idx, len(trees), n_classes) if i not in remove_trees]
         for cls_idx in range(n_classes)
         ]
     
@@ -109,7 +112,8 @@ for dat_pack in DataPackages.items():
     
     y_pred = (y_pred_prob >= 0.5).astype(int)
     
-    for i in enumerate(range(len(y_pred))):
+    for i in range(len(y_pred)):
+        #print(f"i: {i}, y_pred_prob[i] shape: {y_pred_prob[i].shape}, values: {y_pred_prob[i]}")
         if np.sum(y_pred[i]) == 0:
             y_pred[i, np.argmax(y_pred_prob[i])] = 1
     
