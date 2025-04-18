@@ -76,6 +76,9 @@ def predict_tree(tree, data_point):
     
     return node['leaf']
 
+
+
+
 model_name = "xgb_Full"
 index = 20
 
@@ -93,11 +96,8 @@ trees = model["trees"]
 tree_info = model["tree_info"]
 iteration_indptr = model["iteration_indptr"]
 
-print("Before pruning:")
-print(f"Number of trees: {len(trees)}")
-print(f"Length of tree_info: {len(tree_info)}")
-print(f"Length of iteration_indptr: {len(iteration_indptr)}")
-print("num_trees: ", model_json["learner"]["gradient_booster"]["model"]["gbtree_model_param"]["num_trees"])
+
+
 
 start = iteration_indptr[index]
 end = iteration_indptr[index + 1]
@@ -105,32 +105,27 @@ n_removed = end - start
 
 del trees[start:end]
 del tree_info[start:end]
-
+'''
 del iteration_indptr[index]
 
 for i in range(index, len(iteration_indptr)):
-    iteration_indptr[i] -= n_removed
+    iteration_indptr[i] -= n_removed'''
+
+num_parallel_tree = 9
+
+# Rebuild iteration_indptr safely
+iteration_indptr = [i * num_parallel_tree for i in range(len(trees) // num_parallel_tree + 1)]
 
 
 model_json["learner"]["gradient_booster"]["model"]["gbtree_model_param"]["num_trees"] = str(len(trees))
-#model_json["learner"]["gradient_booster"]["model"]["gbtree_model_param"]["num_parallel_tree"]
+model_json["learner"]["gradient_booster"]["model"]["gbtree_model_param"]["num_parallel_tree"] = str(num_parallel_tree)
 model_json["learner"]["gradient_booster"]["model"]["trees"] = trees
 model_json["learner"]["gradient_booster"]["model"]["tree_info"] = tree_info
 model_json["learner"]["gradient_booster"]["model"]["iteration_indptr"] = iteration_indptr
 
-print("After pruning:")
-print(f"Number of trees: {len(trees)}")
-print(f"Length of tree_info: {len(tree_info)}")
-print(f"Length of iteration_indptr: {len(iteration_indptr)}")
-print("num_trees: ", model_json["learner"]["gradient_booster"]["model"]["gbtree_model_param"]["num_trees"])
 
-#print("Iteration Indptr after pruning:", iteration_indptr)
-print("Last entry of iteration_indptr:", iteration_indptr[-1])
 
-assert iteration_indptr[-1] == len(trees)
-assert len(tree_info) == len(trees)
-assert all(isinstance(i, int) for i in iteration_indptr)
-assert all(isinstance(i, int) for i in tree_info)
+
 
 
 

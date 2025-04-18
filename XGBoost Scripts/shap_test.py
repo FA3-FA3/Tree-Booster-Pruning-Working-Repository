@@ -4,8 +4,7 @@ import numpy as np
 import explore_commons
 import pandas as pd
 
-with open(f'models/xgb_Full.pkl', 'rb') as model_file:
-    model = pickle.load(model_file)
+
 
 np.random.seed(1606421)
 
@@ -56,6 +55,9 @@ for dat_pack in DataPackages.items():
     X_train.columns = range(X_train.shape[1])
     X_train[10] = X_train[10].astype(float)
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
+    
+    with open(f'models/xgb_Full.pkl', 'rb') as model_file:
+        model = pickle.load(model_file)
     
     print("Applying SHAP")
     

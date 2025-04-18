@@ -1,5 +1,7 @@
-Try to tweak whole tree pruning so there is less file type conversions
-Implement tree based pruning for single nodes
+
 Implement SHAP output interpretation
 Implement tree querying functions
-Research and figure out how to use these for tree based pruning
+Run & graph n_estimator optimization
+
+Test manual inference advised by SHAP and tree querying
+Implement tree based pruning for single nodes
