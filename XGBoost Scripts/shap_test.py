@@ -63,6 +63,6 @@ for dat_pack in DataPackages.items():
     
     print("Applying SHAP")
     
-    #model_shap = ms.shap_features(model, X_train)
+    model_shap = ms.shap_features(model, X_train)
     
-    model_shap_least = ms.shap_features_least(model, X_train)
+    #model_shap_least = ms.shap_features_least(model, X_train)

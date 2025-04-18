@@ -1,6 +1,4 @@
 
-Implement SHAP output interpretation
-Implement tree querying functions
 Run & graph n_estimator optimization
 
 Test manual inference advised by SHAP and tree querying

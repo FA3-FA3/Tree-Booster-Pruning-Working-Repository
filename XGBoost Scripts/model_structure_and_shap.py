@@ -44,6 +44,16 @@ def model_dump_to_array(model):
                 class_trees[i][j][k] = node_str_to_arr(class_trees[i][j][k])
     return class_trees
 
+def model_dump_to_array_linear(model):
+    dump = model.get_booster().get_dump()
+    all_trees = []
+    for tree_str in dump:
+        tree_lines = tree_str.split("\n")
+        tree_array = [node_str_to_arr(line) for line in tree_lines if line.strip() != ""]
+        all_trees.append(tree_array)
+
+    return all_trees
+
 def plot_binary_tree(tree):
     G = nx.DiGraph()
     
@@ -89,16 +99,12 @@ def plot_binary_tree(tree):
 def shap_features(model, X_train):
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(X_train)
-    
-    shap.summary_plot(shap_values, X_train, plot_type="bar")
-    
     return shap_values
 
-def shap_features_least(model, X_train):
+def shap_plot(shap_values, X_train):
+    shap.summary_plot(shap_values, X_train, plot_type="bar")
 
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(X_train)
-
+def shap_features_least(shap_values, X_train):
     # For multi-class: shap_values is (n_samples, n_features, n_classes)
     if isinstance(shap_values, np.ndarray) and shap_values.ndim == 3:
         # Average over samples and classes
@@ -115,7 +121,25 @@ def shap_features_least(model, X_train):
     # Plot SHAP summary bar plot for least important
     shap.summary_plot(shap_values[:, least_important_idx, :], X_least, plot_type="bar")
 
-    return shap_values
+def shap_features_by_group(shap_values, X_train, group=0):
+    if isinstance(shap_values, np.ndarray) and shap_values.ndim == 3:
+        mean_abs_shap = np.abs(shap_values).mean(axis=(0, 2))  # shape: (n_features,)
+    else:
+        raise ValueError("Unexpected SHAP value shape. Expected 3D array for multi-class.")
+
+    # Sort features by importance (descending)
+    sorted_idx = np.argsort(-mean_abs_shap)
+
+    # Determine number of features in this group
+    start = group * 20
+    end = min(start + 20, len(mean_abs_shap))
+
+    group_indices = sorted_idx[start:end]
+
+    # Subset for plotting
+    X_subset = X_train.iloc[:, group_indices]
+    shap.summary_plot(shap_values[:, group_indices, :], X_subset, plot_type="bar")
+
 
 
 
