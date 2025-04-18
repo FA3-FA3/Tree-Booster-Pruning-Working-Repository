@@ -1,9 +1,9 @@
-import model_structure
+import model_structure_and_shap as ms
 import pickle
 import numpy as np
 import explore_commons
 import pandas as pd
-
+import shap
 
 
 np.random.seed(1606421)
@@ -56,9 +56,13 @@ for dat_pack in DataPackages.items():
     X_train[10] = X_train[10].astype(float)
     X_train.replace([np.inf, -np.inf], np.nan, inplace=True)
     
+    print(X_train.shape)
+    
     with open(f'models/xgb_Full.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
     
     print("Applying SHAP")
     
-    model_shap = model_structure.shap_features(model, X_train)
+    #model_shap = ms.shap_features(model, X_train)
+    
+    model_shap_least = ms.shap_features_least(model, X_train)
