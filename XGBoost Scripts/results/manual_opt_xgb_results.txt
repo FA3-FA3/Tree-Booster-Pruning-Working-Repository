@@ -1,0 +1,26 @@
+Columns Removed: {2500, 3337, 907, 1870, 1906, 2131, 2194, 2743, 1753}
+Accuracy: 0.5791859687368395
+Macro F1 Score: 0.7043371743237175
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.55      0.92      0.69      5364
+           1       0.44      0.85      0.58       468
+           2       0.52      0.95      0.67      6350
+           3       0.64      0.97      0.77      1152
+           4       0.54      0.76      0.63        83
+           5       0.97      0.99      0.98     17140
+           6       0.54      0.79      0.64       457
+           7       0.55      0.93      0.69      9386
+           8       0.53      0.94      0.68       590
+
+   micro avg       0.67      0.95      0.79     40990
+   macro avg       0.59      0.90      0.70     40990
+weighted avg       0.72      0.95      0.81     40990
+ samples avg       0.76      0.95      0.82     40990
+
+Time taken(infer): 6801.1334338999995
+FLOPs(infer): 6098727094.00
+Av Memory Usage(infer): 8.51 MB
+Max Memory Usage(infer): 29.88 MB
+

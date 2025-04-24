@@ -1,3 +1,5 @@
+import json
+
 def train_estimate_flops(n_samples, n_features, max_depth, n_estimators, gamma, min_child_weight, subsample):
     effective_samples = n_samples * subsample
     pruning_factor = 1 / (1 + gamma)
@@ -10,6 +12,19 @@ def train_estimate_flops(n_samples, n_features, max_depth, n_estimators, gamma, 
 def infer_estimate_flops(n_samples, max_depth, n_estimators, gamma):
     pruning_factor = 1 / (1 + gamma)
     total_flops = n_samples * n_estimators * max_depth * pruning_factor
+    return total_flops
+
+def manual_infer_estimate_flops(n_samples, n_classes, trees_per_class, avg_tree_depth, remove_trees=None, gamma=0.0):
+    remove_trees = remove_trees or set()
+    pruning_factor = 1 / (1 + gamma)
+    ops_per_tree = avg_tree_depth + 1
+    total_flops = 0.0
+    
+    for cls_idx in range(n_classes):
+        removed_for_class = sum(1 for t in remove_trees if (t % n_classes) == cls_idx)
+        effective_trees = trees_per_class - removed_for_class
+        flops_cls = n_samples * effective_trees * ops_per_tree * pruning_factor
+        total_flops += flops_cls
     return total_flops
 
 def memory_stats(memory_snapshots):
