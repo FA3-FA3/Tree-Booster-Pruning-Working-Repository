@@ -68,8 +68,6 @@ y_test = mlb.transform([i for i in y_test["class"].str.split(", ")])
 pickle.dump(mlb, open(f'LabelEncoder.pkl', "wb"))
 
 
-index = 20
-
 for dat_pack in DataPackages.items():
     with open(f'models/xgb_Full.pkl', 'rb') as model_file:
         model = pickle.load(model_file)
@@ -90,8 +88,10 @@ for dat_pack in DataPackages.items():
     
     
     #INDICIES OF TREES TO PRUNE
-    remove_trees = {20, 21}
-        
+    remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337}
+    
+    print("Inference started")
+    
     trees = model.get_booster().get_dump(dump_format='json')
     n_classes = 9
     trees_per_class = len(trees) // n_classes
@@ -118,6 +118,7 @@ for dat_pack in DataPackages.items():
             y_pred[i, np.argmax(y_pred_prob[i])] = 1
     
     output_text = (
+    f"Columns Removed: {remove_trees}"
     f"Accuracy: {metrics.accuracy_score(y_test, y_pred)}\n"
     f"Macro F1 Score: {metrics.f1_score(y_pred, y_test, average='macro')}\n"
     f"Classification Report:\n{metrics.classification_report(y_test, y_pred)}\n"

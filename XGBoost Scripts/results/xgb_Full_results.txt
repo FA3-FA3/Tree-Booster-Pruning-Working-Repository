@@ -95,5 +95,65 @@ Time taken(infer): 8.49872479999999
 FLOPs(train): 46503936000.00
 FLOPs(infer): 121101000.00
 Av Memory Usage(train): 124.61 MB
-Max Memory Usage(train): 149.85 MBAv Memory Usage(infer): 155.65 MB
-Max Memory Usage(infer): 158.42 MBSnapshot Stats(train): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\numpy\\core\\fromnumeric.py' lineno=88>,)> size=3875328 (+3875328) count=161472 (+161472)>, <StatisticDiff traceback=<Traceback (<Frame filename='c:\\users\\frank\\comp3000\\xgboost scripts\\main.py' lineno=106>,)> size=1443704 (+1443704) count=4 (+4)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=55584 (+55584) count=476 (+476)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=348>,)> size=36800 (+36800) count=575 (+575)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=533>,)> size=36736 (+36736) count=574 (+574)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=28032 (+28032) count=285 (+285)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\data.py' lineno=83>,)> size=20216 (+20216) count=366 (+366)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=13464 (+13464) count=267 (+267)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=11728 (+11520) count=196 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=10656 (+10656) count=186 (+186)>]Snapshot Stats(infer): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\core.py' lineno=447>,)> size=5813088 (+5813088) count=2 (+2)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\sklearn.py' lineno=1581>,)> size=2906520 (+2906520) count=2 (+2)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=110448 (+54864) count=946 (+470)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=55224 (+27192) count=565 (+280)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=348>,)> size=63744 (+26944) count=996 (+421)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=533>,)> size=63552 (+26816) count=993 (+419)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\data.py' lineno=83>,)> size=24016 (+16848) count=430 (+310)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=28440 (+14976) count=555 (+288)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=23248 (+11520) count=388 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=21312 (+10656) count=372 (+186)>]
+Max Memory Usage(train): 149.85 MB
+Av Memory Usage(infer): 155.65 MB
+Max Memory Usage(infer): 158.42 MB
+Snapshot Stats(train): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\numpy\\core\\fromnumeric.py' lineno=88>,)> size=3875328 (+3875328) count=161472 (+161472)>, <StatisticDiff traceback=<Traceback (<Frame filename='c:\\users\\frank\\comp3000\\xgboost scripts\\main.py' lineno=106>,)> size=1443704 (+1443704) count=4 (+4)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=55584 (+55584) count=476 (+476)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=348>,)> size=36800 (+36800) count=575 (+575)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=533>,)> size=36736 (+36736) count=574 (+574)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=28032 (+28032) count=285 (+285)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\data.py' lineno=83>,)> size=20216 (+20216) count=366 (+366)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=13464 (+13464) count=267 (+267)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=11728 (+11520) count=196 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=10656 (+10656) count=186 (+186)>]Snapshot Stats(infer): [<StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\core.py' lineno=447>,)> size=5813088 (+5813088) count=2 (+2)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\sklearn.py' lineno=1581>,)> size=2906520 (+2906520) count=2 (+2)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1995>,)> size=110448 (+54864) count=946 (+470)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1021>,)> size=55224 (+27192) count=565 (+280)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=348>,)> size=63744 (+26944) count=996 (+421)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\util\\version\\__init__.py' lineno=533>,)> size=63552 (+26816) count=993 (+419)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\xgboost\\data.py' lineno=83>,)> size=24016 (+16848) count=430 (+310)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\managers.py' lineno=1020>,)> size=28440 (+14976) count=555 (+288)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\generic.py' lineno=356>,)> size=23248 (+11520) count=388 (+192)>, <StatisticDiff traceback=<Traceback (<Frame filename='C:\\Users\\frank\\anaconda3\\Lib\\site-packages\\pandas\\core\\internals\\blocks.py' lineno=1260>,)> size=21312 (+10656) count=372 (+186)>]
+Accuracy: 0.697227933708227
+Macro F1 Score: 0.5811431882747662
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.60      0.63      5342
+           1       0.36      0.32      0.34       454
+           2       0.56      0.67      0.61      6390
+           3       0.68      0.80      0.73      1121
+           4       0.42      0.24      0.31        82
+           5       0.88      0.98      0.93     17096
+           6       0.52      0.43      0.47       437
+           7       0.62      0.60      0.61      9461
+           8       0.56      0.65      0.60       594
+
+   micro avg       0.73      0.77      0.75     40977
+   macro avg       0.58      0.59      0.58     40977
+weighted avg       0.72      0.77      0.74     40977
+ samples avg       0.74      0.77      0.75     40977
+
+Time taken(train): 67.69149430000004
+Time taken(infer): 8.360692700000016
+FLOPs(train): 4133683200.00
+FLOPs(infer): 67278333.33
+Av Memory Usage(train): 77.21 MB
+Max Memory Usage(train): 236.22 MB
+Av Memory Usage(infer): 0.00 MB
+Max Memory Usage(infer): 0.00 MB
+
+Accuracy: 0.702430202888498
+Macro F1 Score: 0.578335597239827
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.62      0.65      5317
+           1       0.39      0.32      0.35       458
+           2       0.57      0.65      0.61      6474
+           3       0.68      0.87      0.76      1135
+           4       0.38      0.18      0.24        83
+           5       0.88      0.98      0.93     17133
+           6       0.55      0.43      0.48       469
+           7       0.63      0.60      0.61      9341
+           8       0.57      0.58      0.58       633
+
+   micro avg       0.73      0.77      0.75     41043
+   macro avg       0.59      0.58      0.58     41043
+weighted avg       0.72      0.77      0.75     41043
+ samples avg       0.75      0.78      0.75     41043
+
+Time taken(train): 108.21364199999994
+Time taken(infer): 11.058328299999857
+FLOPs(train): 4133683200.00
+FLOPs(infer): 67278333.33
+Av Memory Usage(train): 30.98 MB
+Max Memory Usage(train): 236.54 MB
+Av Memory Usage(infer): 5.56 MB
+Max Memory Usage(infer): 5.56 MB
+

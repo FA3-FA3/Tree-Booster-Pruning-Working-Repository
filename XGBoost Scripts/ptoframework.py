@@ -78,7 +78,7 @@ def predict_tree(tree, data_point):
 
 
 
-
+'''
 model_name = "xgb_Full"
 index = 20
 
@@ -105,11 +105,11 @@ n_removed = end - start
 
 del trees[start:end]
 del tree_info[start:end]
-'''
+
 del iteration_indptr[index]
 
 for i in range(index, len(iteration_indptr)):
-    iteration_indptr[i] -= n_removed'''
+    iteration_indptr[i] -= n_removed
 
 num_parallel_tree = 9
 
@@ -141,3 +141,4 @@ with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", delete=False) as tmp
     except xgb.core.XGBoostError as e:
         print(f"Error loading model: {e}")
 
+'''

@@ -1,5 +1,5 @@
 import pickle
-import model_structure_and_shap as ms
+import tree_structure as ms
 
 #get indicies of trees containing a feature ordered in how many times the feature appears in such a tree
 
@@ -20,9 +20,8 @@ def get_trees_with_feature(model, feature_index):
     return found_indicies
         
 
-'''
+
 with open(f'models/xgb_Full.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
-print(get_trees_with_feature(model, 95))
-tree_arrays = ms.model_dump_to_array_linear(model)'''
+print(get_trees_with_feature(model, 65))

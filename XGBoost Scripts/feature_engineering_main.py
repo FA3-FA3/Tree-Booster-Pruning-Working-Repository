@@ -9,7 +9,8 @@ import pickle
 #from XGBoost_Weighted import XGBClassifier_w
 import misc
 import tracemalloc
-import photometric_graph
+import json
+import shap_routines as ms
 
 # Set seed for reproducibility
 np.random.seed(1606421)
@@ -50,6 +51,11 @@ PhysicsPackage = pd.concat([BasePackage, df.loc[:, idx["Adopted", ["E(B-V)", 'lo
 # All Relevant Variables
 FullPackage = pd.concat([BiasPackage, PhysicsPackage], axis=1)
 
+drop_cols = [44, 81, 82, 83, 84, 85, 26, 27, 89, 90, 91, 92, 93, 80, 79, 43, 95, 51, 45, 32, 94, 31, 49, 50, 69, 78, 68, 67, 30, 29, 28, 22]
+keep_cols = [i for i in range(FullPackage.shape[1]) if i not in drop_cols]
+
+FullPackage = FullPackage.iloc[:, keep_cols]
+
 all_models = []
 
 # Split Indices
@@ -74,7 +80,7 @@ for dat_pack in DataPackages.items():
     memory_snapshots_train = []
     memory_snapshots_infer = []
     tracemalloc.clear_traces()
-    
+
     start1 = timer()
     tracemalloc.start()
     
@@ -98,10 +104,9 @@ for dat_pack in DataPackages.items():
     w = np.array([package_params.pop(w_i) for w_i in weight_params])
     print(w)
     model = xgb.XGBClassifier(**package_params, n_estimators = 500, eta=0.1, tree_method='hist', random_state=1606421)
-    memory_snapshots_train.append(tracemalloc.get_traced_memory()[1])
+    memory_snapshots_train.append(tracemalloc.get_traced_memory()[0])
     
     print("Fitting now")
-    
     
     # Set class weights and fit model
     model.fit(X_train, y_train, sample_weight=[np.sum(w * i) for i in y_train])
@@ -109,7 +114,6 @@ for dat_pack in DataPackages.items():
     
     end1 = timer()
     start2 = timer()
-    
     
     # Make predictions
     y_pred = model.predict(X_test)
@@ -121,7 +125,7 @@ for dat_pack in DataPackages.items():
         if sum(j) < 1:
             j[np.argmax(y_pred_prob[i])] = 1
     memory_snapshots_infer.append(tracemalloc.get_traced_memory()[0])
-    
+
     end2 = timer()
     
     flops_train = misc.train_estimate_flops(len(X_train), X_train.shape[1], package_params['max_depth'], 500, package_params['gamma'], package_params['min_child_weight'], package_params['subsample'])
@@ -146,11 +150,20 @@ for dat_pack in DataPackages.items():
 )
     
     print(output_text)
-    with open(f'results/xgb_{dat_pack[0]}_results.txt', 'a') as output_file:
+    
+    output_array = [metrics.accuracy_score(y_test, y_pred), metrics.f1_score(y_pred, y_test, average='macro'), end1 - start1, end2 - start2, flops_train, flops_infer, av_mem_train / (1024 ** 2), max_mem_train / (1024 ** 2), av_mem_infer / (1024 ** 2), max_mem_infer / (1024 ** 2)]
+
+    
+    with open(f'results/xgb_features_removed_results.txt', 'a') as output_file:
         output_file.write(output_text + '\n')
+        
+    with open(f'results/opt_xgb_features_removed_results_arrays.txt', 'a') as output_file:
+        json.dump(output_array, output_file)
+        output_file.write('\n') 
     
     #Save trained models
-    with open(f'models/xgb_{dat_pack[0]}.pkl', 'wb') as model_file:
+    with open(f'models/xgb_features_removed.pkl', 'wb') as model_file:
         pickle.dump(model, model_file)
         
     #model.save_model(f'models/xgb_{dat_pack[0]}.json')
+    

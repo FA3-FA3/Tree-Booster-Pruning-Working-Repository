@@ -1,0 +1,58 @@
+Accuracy: 0.7005474768994475
+Macro F1 Score: 0.5972819776684191
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.63      0.65      5414
+           1       0.42      0.40      0.41       439
+           2       0.56      0.67      0.61      6430
+           3       0.69      0.88      0.77      1130
+           4       0.48      0.27      0.34        86
+           5       0.89      0.98      0.93     16959
+           6       0.52      0.41      0.46       442
+           7       0.62      0.61      0.62      9506
+           8       0.57      0.60      0.58       609
+
+   micro avg       0.73      0.78      0.75     41015
+   macro avg       0.60      0.61      0.60     41015
+weighted avg       0.73      0.78      0.75     41015
+ samples avg       0.75      0.78      0.76     41015
+
+Time taken(train): 65.0858993999999
+Time taken(infer): 10.374176199999965
+FLOPs(train): 2755788800.00
+FLOPs(infer): 67278333.33
+Av Memory Usage(train): 51.59 MB
+Max Memory Usage(train): 157.38 MB
+Av Memory Usage(infer): 0.00 MB
+Max Memory Usage(infer): 0.00 MB
+
+Accuracy: 0.6961874798721728
+Macro F1 Score: 0.5790301035551804
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.66      0.60      0.63      5341
+           1       0.39      0.33      0.36       432
+           2       0.55      0.65      0.60      6493
+           3       0.69      0.80      0.74      1123
+           4       0.60      0.21      0.31        87
+           5       0.88      0.98      0.93     17056
+           6       0.52      0.42      0.46       449
+           7       0.61      0.61      0.61      9430
+           8       0.57      0.59      0.58       606
+
+   micro avg       0.73      0.77      0.75     41017
+   macro avg       0.61      0.58      0.58     41017
+weighted avg       0.72      0.77      0.74     41017
+ samples avg       0.74      0.77      0.75     41017
+
+Time taken(train): 63.28631510000014
+Time taken(infer): 108.15235550000034
+FLOPs(train): 2755788800.00
+FLOPs(infer): 67278333.33
+Av Memory Usage(train): 21.11 MB
+Max Memory Usage(train): 100.10 MB
+Av Memory Usage(infer): 5.58 MB
+Max Memory Usage(infer): 5.58 MB
+
