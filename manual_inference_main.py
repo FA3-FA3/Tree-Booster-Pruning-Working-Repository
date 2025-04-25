@@ -53,11 +53,6 @@ PhysicsPackage = pd.concat([BasePackage, df.loc[:, idx["Adopted", ["E(B-V)", 'lo
 # All Relevant Variables
 FullPackage = pd.concat([BiasPackage, PhysicsPackage], axis=1)
 
-drop_cols = [44, 81, 82, 83, 84, 85, 26, 27, 89, 90, 91, 92, 93, 80, 79, 43, 95, 51, 45, 32, 94, 31, 49, 50, 69, 78, 68, 67, 30, 29, 28, 22]
-keep_cols = [i for i in range(FullPackage.shape[1]) if i not in drop_cols]
-
-FullPackage = FullPackage.iloc[:, keep_cols]
-
 all_models = []
 
 # Split Indices
@@ -96,8 +91,11 @@ for dat_pack in DataPackages.items():
     
     #Feaature 65 trees 907 to 3337
     #Feature 64 trees 2144 to 3341
+    #Feature 88
     #INDICIES OF TREES TO PRUNE
-    remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337, 2144, 2783, 2905, 3341}
+    remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337, 
+                    2144, 2783, 2905, 3341, 
+                    }
     
     print("Inference started")
     memory_snapshots_infer = []
