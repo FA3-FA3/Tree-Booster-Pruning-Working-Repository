@@ -1,0 +1,52 @@
+Columns Removed: {2500, 3337, 907, 1870, 1906, 2131, 2194, 2743, 1753}
+Accuracy: 0.5791859687368395
+Macro F1 Score: 0.7043371743237175
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.55      0.92      0.69      5364
+           1       0.44      0.85      0.58       468
+           2       0.52      0.95      0.67      6350
+           3       0.64      0.97      0.77      1152
+           4       0.54      0.76      0.63        83
+           5       0.97      0.99      0.98     17140
+           6       0.54      0.79      0.64       457
+           7       0.55      0.93      0.69      9386
+           8       0.53      0.94      0.68       590
+
+   micro avg       0.67      0.95      0.79     40990
+   macro avg       0.59      0.90      0.70     40990
+weighted avg       0.72      0.95      0.81     40990
+ samples avg       0.76      0.95      0.82     40990
+
+Time taken(infer): 6801.1334338999995
+FLOPs(infer): 6098727094.00
+Av Memory Usage(infer): 8.51 MB
+Max Memory Usage(infer): 29.88 MB
+
+Columns Removed: {736, 2500, 2950, 1096, 3337, 1834, 907, 1325, 1870, 1906, 2131, 2194, 3539, 2743, 1753}
+Accuracy: 0.5757921074144722
+Macro F1 Score: 0.7062772845337945
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.56      0.92      0.69      5346
+           1       0.41      0.85      0.55       440
+           2       0.52      0.95      0.67      6341
+           3       0.64      0.97      0.77      1147
+           4       0.58      0.82      0.68        83
+           5       0.97      0.99      0.98     16987
+           6       0.56      0.81      0.66       473
+           7       0.56      0.93      0.70      9567
+           8       0.51      0.92      0.66       587
+
+   micro avg       0.67      0.95      0.79     40971
+   macro avg       0.59      0.91      0.71     40971
+weighted avg       0.72      0.95      0.81     40971
+ samples avg       0.76      0.95      0.82     40971
+
+Time taken(infer): 8819.055607600001
+FLOPs(infer): 6098727094.00
+Av Memory Usage(infer): 8.51 MB
+Max Memory Usage(infer): 29.88 MB
+

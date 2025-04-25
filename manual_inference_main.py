@@ -53,6 +53,11 @@ PhysicsPackage = pd.concat([BasePackage, df.loc[:, idx["Adopted", ["E(B-V)", 'lo
 # All Relevant Variables
 FullPackage = pd.concat([BiasPackage, PhysicsPackage], axis=1)
 
+drop_cols = [44, 81, 82, 83, 84, 85, 26, 27, 89, 90, 91, 92, 93, 80, 79, 43, 95, 51, 45, 32, 94, 31, 49, 50, 69, 78, 68, 67, 30, 29, 28, 22]
+keep_cols = [i for i in range(FullPackage.shape[1]) if i not in drop_cols]
+
+FullPackage = FullPackage.iloc[:, keep_cols]
+
 all_models = []
 
 # Split Indices
@@ -66,7 +71,7 @@ y_train = classes.iloc[train_indices]
 
 y_train, mlb = explore_commons.classes_to_multilabel([i for i in y_train["class"].str.split(", ")])
 y_test = mlb.transform([i for i in y_test["class"].str.split(", ")])
-pickle.dump(mlb, open(f'LabelEncoder.pkl', "wb"))
+#pickle.dump(mlb, open(f'LabelEncoder.pkl', "wb"))
 
 
 for dat_pack in DataPackages.items():
@@ -88,10 +93,11 @@ for dat_pack in DataPackages.items():
     X_test[10] = X_test[10].astype(float)
     
     
-    #INDICIES OF TREES TO PRUNE
+    
     #Feaature 65 trees 907 to 3337
-    #Feature 63 trees 736 to 3539
-    remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337, 736, 1096, 1325, 1834, 1906, 2950, 3539}
+    #Feature 64 trees 2144 to 3341
+    #INDICIES OF TREES TO PRUNE
+    remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337, 2144, 2783, 2905, 3341}
     
     print("Inference started")
     memory_snapshots_infer = []

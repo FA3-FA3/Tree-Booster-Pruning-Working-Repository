@@ -24,4 +24,4 @@ def get_trees_with_feature(model, feature_index):
 with open(f'models/xgb_Full.pkl', 'rb') as model_file:
     model = pickle.load(model_file)
 
-print(get_trees_with_feature(model, 63))
+print(get_trees_with_feature(model, 64))
