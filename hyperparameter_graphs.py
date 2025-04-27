@@ -1,7 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 
-def seperate_arrays(arrays):
+def seperate_arrays(arrays):#Seperate arrays into metrics
     opt_vals = [None] * len(arrays)
     accuracy_vals = [None] * len(arrays)
     macrof1_vals = [None] * len(arrays)
@@ -27,7 +27,7 @@ def seperate_arrays(arrays):
         infer_maxmem[i] = arrays[i][11]
     return opt_vals, accuracy_vals, macrof1_vals, train_times, infer_times, train_flops, infer_flops, train_avmem, train_maxmem, infer_avmem, infer_maxmem
 
-def arrays_to_graphs(arrays, hyperparameter_str):
+def arrays_to_graphs(arrays, hyperparameter_str):#Plot converted arrays as graphs
     opt_vals, accuracy_vals, macrof1_vals, train_times, infer_times, train_flops, infer_flops, train_avmem, train_maxmem, infer_avmem, infer_maxmem = seperate_arrays(arrays)
     #accuracy and macrof1 go together
     #avmem and maxmem go together

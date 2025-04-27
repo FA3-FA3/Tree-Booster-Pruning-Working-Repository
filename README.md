@@ -19,3 +19,14 @@ A Python-based implementation of pre-training regularization-based pruning and p
  - `shap_routines.py`: Functions for extracting and visualizing SHAP feature importance data
  - `tree_querying.py`: Function for querying XGBoost model to find trees containing specified features
  - `tree_structure.py`: Functions for converting model dump into array format and visualizing trees in binary tree graphs
+ - `/graphs`: Outputted graphs
+ - `/models`: Models saved using pickle
+ - `/results`: Text files containing readably formatted test results and also in array format for graphing purposes
+ - `/tuning_results_5foldcv_2000_iter_ms_augmented`: Saved hyperparameter configurations from Cody .et al (Cody et al., 2024)
+## Installation
+git clone --recursive https://github.com/Frankuuuuuuuuuuu/COMP3000.git
+cd COMP3000
+pip install -r requirements.txt
+## References
+Chen, T. and Guestrin, C. (2016) ‘XGBoost’, Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 785–794. doi:10.1145/2939672.2939785. 
+Cody, S.E. et al. (2024) ‘Machine learning based stellar classification with highly sparse photometry data’, Open Research Europe, 4, p. 29. doi:10.12688/openreseurope.17023.2. 

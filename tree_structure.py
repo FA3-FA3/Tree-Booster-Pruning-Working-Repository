@@ -32,7 +32,7 @@ def node_str_to_arr(string):
     
     return []
 
-def model_dump_to_array(model):
+def model_dump_to_array(model):#Converts a XGBClassifier object into arrays and seperate into classes
     dump = model.get_booster().get_dump()
     class_trees = [None] * 9
     for i in range(9):
@@ -43,7 +43,7 @@ def model_dump_to_array(model):
                 class_trees[i][j][k] = node_str_to_arr(class_trees[i][j][k])
     return class_trees
 
-def model_dump_to_array_linear(model):
+def model_dump_to_array_linear(model):#Converts a XGBClassifier object into arrays without seperating into classes
     dump = model.get_booster().get_dump()
     all_trees = []
     for tree_str in dump:
@@ -53,7 +53,7 @@ def model_dump_to_array_linear(model):
 
     return all_trees
 
-def plot_binary_tree(tree):
+def plot_binary_tree(tree):#Plot binary tree representation of decision tree
     G = nx.DiGraph()
     
     for i in range(len(tree)):

@@ -26,7 +26,7 @@ def extract_photometric_data(sample):
 
     return photometric_data
 
-def plot_photometric_graph(sample):
+def plot_photometric_graph(sample):#Pass the row of the df using .iloc and graph is generated
     """
     Extracts and plots a photometric graph from a sample row.
     :param sample: A row from df.iloc[row], containing photometric values.

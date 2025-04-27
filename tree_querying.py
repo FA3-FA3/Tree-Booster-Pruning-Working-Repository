@@ -1,8 +1,7 @@
 import pickle
 import tree_structure as ms
 
-#get indicies of trees containing a feature ordered in how many times the feature appears in such a tree
-
+#get indicies of trees containing a feature ordered in how many times the feature appears in such a tree0
 def get_trees_with_feature(model, feature_index):
     tree_arrays = ms.model_dump_to_array_linear(model)
     found_indicies = []
