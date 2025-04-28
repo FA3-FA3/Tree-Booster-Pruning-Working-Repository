@@ -95,14 +95,13 @@ for dat_pack in DataPackages.items():
     #Feature 40 trees 511 to 1726
     #Feature 35 pt2 trees 2140 to 3445
     #Good^ macroF1=0.716298599030496
-    #Feature 38 pt4 trees 3256 to 3526
     #INDICIES OF TREES TO PRUNE
     remove_trees = {907, 1753, 1870, 1906, 2131, 2194, 2500, 2743, 3337, 
                     2144, 2783, 2905, 3341, 
                     970, 1114, 1271, 1303, 2221, 2770, 
                     511, 547, 601, 961, 1024, 1366, 1726, 
                     2140, 2149, 2196, 2296, 2446, 2473, 2554, 2772, 2779, 3445, 
-                    3256, 3384, 3526}
+                    }
     
     print("Inference started")
     memory_snapshots_infer = []
